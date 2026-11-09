@@ -172,6 +172,10 @@ p{margin:0}a{color:var(--accent)}img,video{max-width:100%;display:block}
 .plan.top{background:var(--hero);border-color:var(--hero);box-shadow:0 40px 80px -24px rgba(12,27,56,.55);transform:translateY(-12px)}
 .plan.top h3,.plan.top .precio{color:#fff}.plan.top .precio small,.plan.top>p{color:#B4BFD8}.plan.top .anual{color:#E3BB60}.plan.top li{color:#DCE3F2}
 .plan.top li::before{background-color:rgba(83,209,138,.2)}
+.lanz{display:inline-block;align-self:flex-start;width:fit-content;background:#E3BB60;color:#0C1B38;font-weight:800;font-size:11.5px;letter-spacing:.06em;border-radius:999px;padding:4px 11px;margin-bottom:8px;text-transform:uppercase}
+.antes{display:block;margin-top:10px;font-size:17px;font-weight:600;color:var(--muted);text-decoration:line-through}
+.plan.top .antes{color:#B4BFD8}
+.anual s{font-weight:600;opacity:.75;margin-left:4px}
 .sello{position:absolute;top:-14px;left:36px;background:#E3BB60;color:#0C1B38;font-weight:800;font-size:12px;letter-spacing:.08em;border-radius:999px;padding:6px 13px}
 .sug{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--chip-gold-bg);color:var(--chip-gold-fg);border-radius:6px;padding:3px 8px}
 .precios-nota{margin:34px auto 0;max-width:760px;text-align:center;font-size:14.5px;color:var(--muted)}
@@ -463,11 +467,11 @@ footer .copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:22px;
   <div class="wrap">
     <div class="cab c rv"><div class="etq">Planes</div><h2>Un precio claro para cada tamaño de despacho.</h2><p>Pruébela 15 días, sin tarjeta, y decida con calma.</p></div>
     <div class="planes">
-      <div class="plan rv"><h3>Independiente</h3><p>Para el abogado que trabaja solo.</p><div class="precio">$79.900 <small>/ mes</small></div><div class="anual">o $799.000 al año (2 meses gratis)</div><ul><li>1 usuario</li><li>Hasta 50 procesos vigilados</li><li>Todos los módulos</li><li>Portal del cliente</li></ul><a class="btn btn-linea" href="#prueba">Empezar prueba</a></div>
-      <div class="plan top rv"><span class="sello">LA MÁS ELEGIDA</span><h3>Despacho</h3><p>Para equipos de 2 a 5 personas.</p><div class="precio">$219.900 <small>/ mes</small></div><div class="anual">o $2.199.000 al año (2 meses gratis)</div><ul><li>Hasta 5 usuarios</li><li>Hasta 300 procesos vigilados</li><li>Portal del cliente con el nombre de su despacho</li><li>Contabilidad y cartera completas</li></ul><a class="btn btn-oro" href="#prueba">Empezar prueba</a></div>
-      <div class="plan rv"><h3>Firma</h3><p>Para firmas de 6 a 15 personas.</p><div class="precio">$549.900 <small>/ mes</small></div><div class="anual">más de 15 usuarios: a convenir</div><ul><li>Hasta 15 usuarios</li><li>Hasta 1.000 procesos vigilados</li><li>Le ayudamos a pasar sus datos</li><li>Soporte prioritario por WhatsApp</li></ul><a class="btn btn-linea" href="#prueba">Hablar con nosotros</a></div>
+      <div class="plan rv"><span class="lanz">Lanzamiento</span><h3>Independiente</h3><p>Para el abogado que trabaja solo.</p><span class="antes">$79.900</span><div class="precio">$60.000 <small>/ mes</small></div><div class="anual">Pago anual: $576.000 <s>$720.000</s><br>20% menos con el pago del año</div><ul><li>1 usuario</li><li>Hasta 50 procesos vigilados</li><li>Todos los módulos</li><li>Portal del cliente</li></ul><a class="btn btn-linea" href="#prueba">Empezar prueba</a></div>
+      <div class="plan top rv"><span class="sello">LA MÁS ELEGIDA</span><span class="lanz">Lanzamiento</span><h3>Despacho</h3><p>Para equipos de 2 a 5 personas.</p><span class="antes">$219.900</span><div class="precio">$150.000 <small>/ mes</small></div><div class="anual">Pago anual: $1.440.000 <s>$1.800.000</s><br>20% menos con el pago del año</div><ul><li>Hasta 5 usuarios</li><li>Hasta 300 procesos vigilados</li><li>Portal del cliente con el nombre de su despacho</li><li>Contabilidad y cartera completas</li></ul><a class="btn btn-oro" href="#prueba">Empezar prueba</a></div>
+      <div class="plan rv"><span class="lanz">Lanzamiento</span><h3>Firma</h3><p>Para firmas de 6 a 15 personas.</p><span class="antes">$549.900</span><div class="precio">$350.000 <small>/ mes</small></div><div class="anual">Pago anual: $3.360.000 <s>$4.200.000</s><br>20% menos con el pago del año</div><ul><li>Hasta 15 usuarios</li><li>Hasta 1.000 procesos vigilados</li><li>Le ayudamos a pasar sus datos</li><li>Soporte prioritario por WhatsApp</li></ul><a class="btn btn-linea" href="#prueba">Hablar con nosotros</a></div>
     </div>
-    <p class="precios-nota">Precios en pesos colombianos. El pago anual equivale a 10 meses.</p>
+    <p class="precios-nota">Precios en pesos colombianos. Más de 15 usuarios: a convenir.</p>
     
   </div>
 </div>
@@ -501,7 +505,7 @@ footer .copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:22px;
       <details><summary>¿Qué procesos puede revisar?</summary><p>Los que publican en la Rama Judicial, en SAMAI y en Publicaciones Procesales. Usted carga el radicado y la aplicación se encarga.</p></details>
       <details><summary>¿Puedo traer mis datos de Excel?</summary><p>Sí. Sus clientes y radicados se cargan desde una hoja de cálculo, sin volver a escribir todo.</p></details>
       <details><summary>¿Qué ve mi cliente en el portal?</summary><p>Solo los procesos que usted autorizó, sus cuotas y sus recibos. Nada más.</p></details>
-      <details><summary>¿Cuánto cuesta?</summary><p>Desde $79.900 al mes, según el tamaño del despacho. Puede probarla 15 días gratis, sin dar tarjeta.</p></details>
+      <details><summary>¿Cuánto cuesta?</summary><p>Desde $60.000 al mes con la oferta de lanzamiento, según el tamaño del despacho. Puede probarla 15 días gratis, sin dar tarjeta.</p></details>
     </div>
   </div>
 </section>
