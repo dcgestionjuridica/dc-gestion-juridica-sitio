@@ -310,6 +310,35 @@ footer .col{display:flex;flex-direction:column;gap:9px}
 footer .copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:22px;font-size:13.5px}
 @media(max-width:1000px){.pasos,.quienes,.contacto,.legal-g{grid-template-columns:1fr}.form{grid-template-columns:1fr}footer{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){footer{grid-template-columns:1fr}}
+
+/* Cabecera animada: logo DC vivo + fondo de puntos de la app */
+.hero #dclRed{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;pointer-events:none}
+#dclChispas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.dcl-marca{perspective:1300px;display:flex;justify-content:center;margin:0 0 22px}
+.dcl-in{will-change:transform;transform-style:preserve-3d}
+.dcl-esc{position:relative;width:170px;height:149px;cursor:pointer}
+.dcl-cuadro{position:absolute;inset:0;overflow:hidden;border-radius:23px;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 0 26px rgba(74,140,255,.55),0 14px 32px rgba(0,0,0,.5);opacity:0;transform:scale(.86);animation:dclEntra 1.1s cubic-bezier(.2,.8,.2,1) .3s forwards}
+.dcl-fondo{position:absolute;inset:0;background:url(assets/dcl_fondo.jpg) center/cover}
+.dcl-luz{position:absolute;inset:0;opacity:0;transition:opacity .45s;mix-blend-mode:screen;background:radial-gradient(circle 130px at var(--lx,50%) var(--ly,50%),rgba(190,220,255,.75),rgba(120,170,255,.22) 40%,transparent 70%)}
+.dcl-esc.cerca .dcl-luz{opacity:1}
+.dcl-barrido{position:absolute;top:-20%;bottom:-20%;width:38%;left:-60%;transform:skewX(-18deg);mix-blend-mode:screen;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:dclBarre 6.5s ease-in-out 2.6s infinite}
+@keyframes dclBarre{0%{left:-60%}35%,100%{left:140%}}
+.dcl-letra{position:absolute;inset:0;background-position:center;background-size:cover;pointer-events:none;filter:drop-shadow(0 5px 8px rgba(0,0,0,.35));opacity:0}
+#dclD{background-image:url(assets/dcl_d.png);animation:dclEntraD 1.1s cubic-bezier(.2,.8,.2,1) .8s forwards}
+#dclC{background-image:url(assets/dcl_c.png);animation:dclEntraC 1.1s cubic-bezier(.2,.8,.2,1) 1.25s forwards}
+@keyframes dclEntra{to{opacity:1;transform:none}}
+@keyframes dclEntraD{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+@keyframes dclEntraC{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+.dcl-filo{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.dcl-filo rect{fill:none;stroke:url(#dclG);stroke-width:2.6;stroke-dasharray:1000;stroke-dashoffset:1000;animation:dclDibuja 1.6s cubic-bezier(.6,0,.2,1) .1s forwards}
+@keyframes dclDibuja{to{stroke-dashoffset:0}}
+.dcl-orb{position:absolute;left:-11px;top:-11px;width:192px;height:171px;overflow:visible;pointer-events:none;opacity:0;animation:dclAp 1s ease 1.2s forwards}
+.dcl-orb rect{fill:none;stroke:#9cc4ff;stroke-opacity:.6;stroke-width:2;stroke-linecap:round;stroke-dasharray:.1 11;animation:dclCorre 40s linear infinite}
+.dcl-esc.cerca .dcl-orb rect{animation-duration:9s;stroke:#f6d27a;stroke-opacity:.85}
+@keyframes dclCorre{to{stroke-dashoffset:-1000}}
+@keyframes dclAp{to{opacity:1}}
+@media (max-width:820px){.dcl-esc{width:120px;height:105px}.dcl-cuadro{border-radius:16px}.dcl-orb{width:140px;height:125px;left:-10px;top:-10px}}
+@media (prefers-reduced-motion:reduce){.dcl-cuadro,.dcl-letra,.dcl-orb{animation-duration:.01s!important;animation-delay:0s!important}.dcl-filo rect{animation-duration:.01s!important}}
 </style>
 
 <header class="nav">
@@ -326,9 +355,15 @@ footer .copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:22px;
 
 <main id="inicio">
 <section class="hero">
-  <div class="juz" aria-hidden="true"></div>
+  <div class="juz" aria-hidden="true"></div><canvas id="dclRed" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-txt">
+<div class="dcl-marca"><div class="dcl-in" id="dclIn"><div class="dcl-esc" id="dclEsc" role="img" aria-label="DC Gestión Jurídica">
+<div class="dcl-cuadro dcl-capa" data-p="-.5"><div class="dcl-fondo"></div><div class="dcl-luz"></div><div class="dcl-barrido"></div></div>
+<svg class="dcl-filo" viewBox="0 0 228 200" aria-hidden="true"><defs><linearGradient id="dclG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe2ff"/><stop offset=".35" stop-color="#4f86ea"/><stop offset=".7" stop-color="#173a86"/><stop offset="1" stop-color="#8fb6ff"/></linearGradient></defs><rect x="1.5" y="1.5" width="225" height="197" rx="29" pathLength="1000"/></svg>
+<svg class="dcl-orb" viewBox="0 0 256 228" aria-hidden="true"><rect x="2" y="2" width="252" height="224" rx="38" pathLength="1000"/></svg>
+<div class="dcl-letra dcl-capa" data-p="1.15" id="dclD"></div><div class="dcl-letra dcl-capa" data-p="1.15" id="dclC"></div>
+</div></div></div>
       <span class="pill"><i></i>Hecha por abogados, usada cada día en un despacho de verdad</span>
       <h1>Su despacho en orden <em>desde la primera hora.</em></h1>
       <p class="sub">DC Gestión Jurídica revisa sus procesos en la Rama Judicial, cuenta sus términos en días hábiles y lleva el cobro de sus honorarios. Usted llega y ya sabe qué sigue.</p>
@@ -605,5 +640,51 @@ footer .copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:22px;
   var iv=new IntersectionObserver(function(es){es.forEach(function(e){if(e.target===gr){visible=e.isIntersecting;if(visible)gr.play().catch(function(){});else gr.pause()}else{if(e.isIntersecting)hero.play().catch(function(){});else hero.pause()}})},{threshold:.35});
   iv.observe(gr);iv.observe(hero);
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){hero.removeAttribute('autoplay');gr.removeAttribute('autoplay')}
+})();
+</script>
+<canvas id="dclChispas" aria-hidden="true"></canvas><script>
+(function(){
+ var H=document.querySelector('.hero'),c=document.getElementById('dclRed'),x=c.getContext('2d'),W,Ht,d=Math.min(2,devicePixelRatio||1),m={x:-9999,y:-9999},P=[],last=0,vis=true;
+ function tam(){var r=H.getBoundingClientRect();W=r.width;Ht=r.height;c.width=W*d;c.height=Ht*d;x.setTransform(d,0,0,d,0,0);
+  var n=Math.max(20,Math.min(90,Math.round(W*Ht/16000)));P=[];for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*Ht,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.5+.5});}
+ function cuadro(t){if(vis){var k=last?Math.min(3,(t-last)/16.7):1;last=t;x.clearRect(0,0,W,Ht);
+  for(var i=0;i<P.length;i++){var p=P[i];p.x+=p.vx*k;p.y+=p.vy*k;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>Ht)p.vy*=-1;
+   var dx=p.x-m.x,dy=p.y-m.y,dm=Math.hypot(dx,dy);if(dm<110&&dm>0){p.x+=dx/dm*1.4*k;p.y+=dy/dm*1.4*k}
+   for(var j=i+1;j<P.length;j++){var q=P[j],dd=Math.hypot(p.x-q.x,p.y-q.y);if(dd<120){x.strokeStyle='rgba(126,170,255,'+(.16*(1-dd/120))+')';x.lineWidth=1;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}}
+   if(dm<180){x.strokeStyle='rgba(160,195,255,'+(.45*(1-dm/180))+')';x.beginPath();x.moveTo(p.x,p.y);x.lineTo(m.x,m.y);x.stroke()}
+   x.fillStyle='rgba(170,200,255,.7)';x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill();}}
+  requestAnimationFrame(cuadro);}
+ new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(H);
+ addEventListener('resize',tam);
+ addEventListener('pointermove',function(e){var r=H.getBoundingClientRect();m.x=e.clientX-r.left;m.y=e.clientY-r.top});
+ document.addEventListener('pointerleave',function(){m.x=m.y=-9999});tam();requestAnimationFrame(cuadro);
+})();
+(function(){
+ var E=document.getElementById('dclEsc'),M=document.getElementById('dclIn'),capas=M.querySelectorAll('.dcl-capa'),luz=E.querySelector('.dcl-luz');
+ var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,obj={x:0,y:0},act={x:0,y:0},cerca=false,f=.45,ult={x:0,y:0};
+ var cv=document.getElementById('dclChispas'),g=cv.getContext('2d'),dp=Math.min(2,devicePixelRatio||1),Ch=[];
+ function tc(){cv.width=innerWidth*dp;cv.height=innerHeight*dp;g.setTransform(dp,0,0,dp,0,0)}tc();addEventListener('resize',tc);
+ addEventListener('pointermove',function(e){
+  var r=E.getBoundingClientRect(),mx=r.left+r.width/2,my=r.top+r.height/2;
+  obj.x=Math.max(-1,Math.min(1,(e.clientX-mx)/(innerWidth/2)));obj.y=Math.max(-1,Math.min(1,(e.clientY-my)/(innerHeight/2)));
+  var dentro=e.clientX>r.left-50&&e.clientX<r.right+50&&e.clientY>r.top-50&&e.clientY<r.bottom+50;
+  if(dentro!==cerca){cerca=dentro;E.classList.toggle('cerca',cerca)}
+  luz.style.setProperty('--lx',(e.clientX-r.left)+'px');luz.style.setProperty('--ly',(e.clientY-r.top)+'px');
+  if(cerca&&!reduce){var v=Math.hypot(e.clientX-ult.x,e.clientY-ult.y);for(var i=0;i<Math.min(4,1+v/12);i++)Ch.push({x:e.clientX,y:e.clientY,vx:(Math.random()-.5)*1.6,vy:(Math.random()-.5)*1.6-.6,v:1,r:Math.random()*1.8+.6,o:Math.random()<.55})}
+  ult={x:e.clientX,y:e.clientY};
+ });
+ document.addEventListener('pointerleave',function(){obj.x=obj.y=0;cerca=false;E.classList.remove('cerca')});
+ function paso(t){
+  if(!matchMedia('(hover:hover)').matches){obj.x=Math.sin(t/2600)*.35;obj.y=Math.cos(t/3100)*.25}
+  act.x+=(obj.x-act.x)*.08;act.y+=(obj.y-act.y)*.08;f+=((cerca?1:.45)-f)*.08;
+  M.style.transform='rotateY('+(act.x*12*f)+'deg) rotateX('+(-act.y*10*f)+'deg)';
+  for(var i=0;i<capas.length;i++){var p=parseFloat(capas[i].dataset.p);capas[i].style.translate=(act.x*p*18*f)+'px '+(act.y*p*14*f)+'px'}
+  g.clearRect(0,0,innerWidth,innerHeight);
+  for(var i=Ch.length-1;i>=0;i--){var c=Ch[i];c.x+=c.vx;c.y+=c.vy;c.vy+=.025;c.v-=.018;if(c.v<=0){Ch.splice(i,1);continue}
+   g.globalAlpha=c.v*.28;g.fillStyle=c.o?'#f3c659':'#7fb0ff';g.beginPath();g.arc(c.x,c.y,c.r*3.2,0,7);g.fill();
+   g.globalAlpha=c.v;g.fillStyle=c.o?'#f6d68c':'#cfe2ff';g.beginPath();g.arc(c.x,c.y,c.r,0,7);g.fill()}
+  g.globalAlpha=1;requestAnimationFrame(paso)}
+ if(!reduce)requestAnimationFrame(paso);
+ E.addEventListener('click',function(){var b=E.querySelector('.dcl-barrido');b.style.animation='none';b.offsetWidth;b.style.animation='dclBarre 1.4s ease-in-out 1'});
 })();
 </script>
