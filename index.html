@@ -352,6 +352,14 @@ footer .copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:22px;
 .hero p.sub{max-width:900px;font-size:clamp(18px,1.6vw,22px);margin-top:22px}
 .hero .botones{margin-top:30px}
 @media (max-width:820px){.hero .wrap{padding-top:36px}.dcl-esc{width:96px;height:84px}.dcl-orb{width:116px;height:102px}.hero h1{font-size:clamp(34px,9.4vw,52px)}}
+
+/* Flecha flotante: ir al final / volver al inicio */
+#irFlecha{position:fixed;left:max(18px,env(safe-area-inset-left,0px));bottom:max(22px,env(safe-area-inset-bottom,0px));z-index:60;width:52px;height:52px;border-radius:50%;border:1.5px solid #D9AE4C;background:linear-gradient(180deg,#1d3d78,#0b1f45);color:#F3D58B;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 22px rgba(5,12,29,.45),0 0 0 4px rgba(255,255,255,.08);transition:transform .25s,box-shadow .25s,border-color .25s}
+#irFlecha:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(5,12,29,.55),0 0 18px rgba(217,174,76,.45)}
+#irFlecha:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#irFlecha svg{width:24px;height:24px;transition:transform .35s}
+#irFlecha.arriba svg{transform:rotate(180deg)}
+@media (prefers-reduced-motion:reduce){#irFlecha,#irFlecha svg{transition:none}}
 </style>
 
 <header class="nav">
@@ -698,5 +706,14 @@ footer .copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:22px;
   g.globalAlpha=1;requestAnimationFrame(paso)}
  if(!reduce)requestAnimationFrame(paso);
  E.addEventListener('click',function(){var b=E.querySelector('.dcl-barrido');b.style.animation='none';b.offsetWidth;b.style.animation='dclBarre 1.4s ease-in-out 1'});
+})();
+</script>
+<button id="irFlecha" type="button" aria-label="Ir al final de la página" title="Ir al final de la página"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="M5.5 12.5 12 19l6.5-6.5"/></svg></button>
+<script>
+(function(){var b=document.getElementById('irFlecha');if(!b)return;var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function fin(){var e=document.documentElement;return innerHeight+scrollY>=e.scrollHeight-160}
+ function pinta(){var a=fin();b.classList.toggle('arriba',a);var t=a?'Volver al inicio de la página':'Ir al final de la página';b.setAttribute('aria-label',t);b.title=t}
+ b.addEventListener('click',function(){var a=fin();scrollTo({top:a?0:document.documentElement.scrollHeight,behavior:rm?'auto':'smooth'})});
+ addEventListener('scroll',pinta,{passive:true});addEventListener('resize',pinta);pinta();
 })();
 </script>
