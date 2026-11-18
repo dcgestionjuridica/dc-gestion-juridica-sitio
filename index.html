@@ -354,7 +354,8 @@ footer .copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:22px;
 @media (max-width:820px){.hero .wrap{padding-top:36px}.dcl-esc{width:96px;height:84px}.dcl-orb{width:116px;height:102px}.hero h1{font-size:clamp(34px,9.4vw,52px)}}
 
 /* Flecha flotante: ir al final / volver al inicio */
-#irFlecha{position:fixed;left:max(18px,env(safe-area-inset-left,0px));bottom:max(22px,env(safe-area-inset-bottom,0px));z-index:60;width:52px;height:52px;border-radius:50%;border:1.5px solid #D9AE4C;background:linear-gradient(180deg,#1d3d78,#0b1f45);color:#F3D58B;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 22px rgba(5,12,29,.45),0 0 0 4px rgba(255,255,255,.08);transition:transform .25s,box-shadow .25s,border-color .25s}
+#irFlecha{position:fixed;left:50%;margin-left:-26px;bottom:max(22px,env(safe-area-inset-bottom,0px));z-index:60;opacity:0;pointer-events:none;width:52px;height:52px;border-radius:50%;border:1.5px solid #D9AE4C;background:linear-gradient(180deg,#1d3d78,#0b1f45);color:#F3D58B;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 22px rgba(5,12,29,.45),0 0 0 4px rgba(255,255,255,.08);transition:transform .25s,box-shadow .25s,border-color .25s,opacity .35s}
+#irFlecha.ver{opacity:1;pointer-events:auto}
 #irFlecha:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(5,12,29,.55),0 0 18px rgba(217,174,76,.45)}
 #irFlecha:focus-visible{outline:3px solid #fff;outline-offset:3px}
 #irFlecha svg{width:24px;height:24px;transition:transform .35s}
@@ -714,6 +715,9 @@ footer .copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:22px;
  function fin(){var e=document.documentElement;return innerHeight+scrollY>=e.scrollHeight-160}
  function pinta(){var a=fin();b.classList.toggle('arriba',a);var t=a?'Volver al inicio de la página':'Ir al final de la página';b.setAttribute('aria-label',t);b.title=t}
  b.addEventListener('click',function(){var a=fin();scrollTo({top:a?0:document.documentElement.scrollHeight,behavior:rm?'auto':'smooth'})});
- addEventListener('scroll',pinta,{passive:true});addEventListener('resize',pinta);pinta();
+ var th=null,sobre=false;function muestra(){b.classList.add('ver');clearTimeout(th);th=setTimeout(function(){if(!sobre&&document.activeElement!==b)b.classList.remove('ver')},2200)}
+ b.addEventListener('pointerenter',function(){sobre=true;muestra()});b.addEventListener('pointerleave',function(){sobre=false;muestra()});b.addEventListener('focus',muestra);
+ ['pointermove','touchstart','keydown','wheel'].forEach(function(n){addEventListener(n,muestra,{passive:true})});
+ addEventListener('scroll',function(){pinta();muestra()},{passive:true});addEventListener('resize',pinta);pinta();
 })();
 </script>
