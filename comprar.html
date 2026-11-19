@@ -2,8 +2,10 @@
 <html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-DOkfnWj7kupdJWmk9SnxCTySusbP1vpwKqQIzEq6peM=' https://*.bold.co; style-src 'self' 'unsafe-inline' https://*.bold.co; img-src 'self' data: https:; font-src 'self' data: https://*.bold.co; connect-src 'self' https://okvxxppudwbcldxpxyfw.supabase.co https://*.bold.co; frame-src https://*.bold.co; form-action 'self' https://*.bold.co; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Comprar DC Gestión Jurídica</title>
-<link rel="icon" href="assets/favicon.png" onerror="this.remove()">
+<link rel="icon" href="assets/favicon.png">
 <style>
 :root{--bg:#f4f6fa;--surf:#fff;--ink:#10223f;--mut:#5b6b85;--line:#dbe2ee;--azul:#2E6BE6;--oro:#D9AE4C;--navy:#0A1630;--ok:#1f9d63;--mal:#c2362f;color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1630;--surf:#12224a;--ink:#eef2fa;--mut:#9fb0cc;--line:#26396a;color-scheme:dark}}
@@ -45,18 +47,26 @@ h2{font-size:21px;margin:0 0 14px}
 .err{color:var(--mal);font-weight:600;margin-top:12px}
 .resumen{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:18px}
 a{color:var(--azul)}
+.bold{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:18px;padding:14px 18px;border:1px solid var(--line);border-radius:14px;background:var(--surf)}
+.bold .logo{flex:none;display:inline-flex;align-items:center;background:#fff;border-radius:10px;padding:6px 12px;border:1px solid #e3e6ef}
+.bold .logo img{height:26px;width:auto;display:block}
+.bold p{margin:0;flex:1 1 260px;font-size:14.5px;color:var(--mut)}.bold p b{color:var(--ink)}
+.sello{display:inline-flex;align-items:center;gap:8px}.sello img{height:22px;width:auto;display:block;background:#fff;border-radius:6px;padding:3px 7px;box-sizing:content-box}
+.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 .gran{text-align:center;padding:40px 16px}.gran .ic{font-size:48px}
 @media(max-width:760px){.planes{grid-template-columns:1fr}.campos{grid-template-columns:1fr}}
 </style></head><body>
-<header><div><b>DC Gestión Jurídica</b><span>Compra segura en línea</span></div></header>
+<header><div><b>DC Gestión Jurídica</b><span class="sello">🔒 Pagos procesados por <img src="assets/bold-logo.png" alt="Bold"></span></div></header>
 <main>
 <h1>Compre su plan</h1>
 <p class="sub">Elija el plan, lea el contrato y pague. Al confirmarse el pago, su cuenta se activa sola y le llega el acceso a su correo.</p>
 <div class="pasos" id="pasos"><span>1. Plan</span><span>2. Sus datos</span><span>3. Contrato</span><span>4. Pago</span></div>
 <section id="vista"><div class="tarjeta">Cargando planes…</div></section>
+<div class="bold"><span class="logo"><img src="assets/bold-logo.png" alt="Bold"></span><p><b>El pago se hace en la plataforma segura de Bold.</b> Puede pagar con tarjeta débito o crédito, PSE y otros medios. DC Gestión Jurídica nunca ve ni guarda los datos de su tarjeta.</p></div>
 </main>
 <script>
 (function(){
+if(window.top!==window.self){try{window.top.location.replace(window.self.location.href)}catch(e){document.documentElement.innerHTML=''}return}
 var API='https://okvxxppudwbcldxpxyfw.supabase.co/functions/v1/compra-publica';
 var S={paso:1,planes:[],docs:[],plan:null,modal:'Mensual',datos:{},bloques:[],pag:0,paginas:[],ultimaVista:0,monto:0,ocupado:false,err:''};
 var $=function(i){return document.getElementById(i)};
@@ -78,10 +88,12 @@ var CAMPOS=[['nombre_despacho','Nombre del despacho o del abogado',1],['document
 function vDatos(){
  var h='<div class="tarjeta"><h2>Sus datos</h2><p class="cont">Con estos datos se llena su contrato. Revíselos bien.</p><div class="campos">';
  CAMPOS.forEach(function(c){h+='<label class="'+(c[2]?'ancho':'')+'">'+c[1]+'<input id="c_'+c[0]+'" value="'+esc(S.datos[c[0]]||'')+'" autocomplete="off"'+(c[0]==='correo'?' type="email"':'')+'></label>'});
+ h+='<label class="hp" aria-hidden="true">Sitio web<input id="c_sitio" tabindex="-1" autocomplete="off"></label>';
  h+='</div><div class="err" id="err">'+esc(S.err)+'</div><div class="fila"><button class="btn gris" id="atr">Atrás</button><button class="btn" id="sig">Ver el contrato</button></div></div>';
  $('vista').innerHTML=h;
  $('atr').onclick=function(){S.paso=1;render()};
  $('sig').onclick=function(){
+  if($('c_sitio')&&$('c_sitio').value){S.err='No se pudo continuar. Recargue la página e intente de nuevo.';return vDatos()}
   CAMPOS.forEach(function(c){S.datos[c[0]]=$('c_'+c[0]).value.trim()});
   var falta=CAMPOS.filter(function(c){return c[0]!=='telefono'&&!S.datos[c[0]]});
   if(falta.length){S.err='Falta: '+falta.map(function(c){return c[1].split(' (')[0]}).join(', ')+'.';return vDatos()}
