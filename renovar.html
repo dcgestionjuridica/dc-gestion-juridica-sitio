@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Renovar DC Gestión Jurídica</title>
+<link rel="icon" href="assets/favicon.png" onerror="this.remove()">
+<style>
+:root{--bg:#f4f6fa;--surf:#fff;--ink:#10223f;--mut:#5b6b85;--line:#dbe2ee;--azul:#2E6BE6;--oro:#D9AE4C;--navy:#0A1630;--ok:#1f9d63;--mal:#c2362f;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1630;--surf:#12224a;--ink:#eef2fa;--mut:#9fb0cc;--line:#26396a;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:var(--navy);color:#fff;padding:16px max(16px,env(safe-area-inset-left,0px))}
+header div{max-width:960px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header b{font-size:18px}header span{color:#BFC9E0;font-size:14px}
+main{max-width:960px;margin:auto;padding:28px max(16px,env(safe-area-inset-left,0px)) 64px}
+h1{font-size:clamp(26px,4vw,36px);line-height:1.15;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 14px}
+.sub{color:var(--mut);margin:0 0 24px}
+.pasos{display:flex;gap:8px;margin:0 0 24px;flex-wrap:wrap}
+.pasos span{font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--surf);border:1px solid var(--line);color:var(--mut)}
+.pasos span.on{background:var(--azul);border-color:var(--azul);color:#fff}
+.pasos span.ya{color:var(--ok);border-color:var(--ok)}
+.tarjeta{background:var(--surf);border:1px solid var(--line);border-radius:20px;padding:24px}
+.modal{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:4px;background:var(--surf);margin-bottom:18px}
+.modal button{border:0;background:transparent;color:var(--mut);font:inherit;font-weight:700;padding:8px 18px;border-radius:999px;cursor:pointer}
+.modal button.on{background:var(--azul);color:#fff}
+.planes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.plan{border:2px solid var(--line);border-radius:18px;padding:20px;background:var(--surf);cursor:pointer;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;gap:6px}
+.plan.on{border-color:var(--azul);box-shadow:0 0 0 3px rgba(46,107,230,.18)}
+.plan h3{margin:0;font-size:20px}.plan .pr{font-size:28px;font-weight:800}.plan small{color:var(--mut);font-size:14px;font-weight:500}
+.plan ul{margin:6px 0 0;padding-left:18px;color:var(--mut);font-size:14.5px}
+.campos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.campos label{display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600}
+.campos input{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.campos .ancho{grid-column:1/-1}
+.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:13px 24px;cursor:pointer;background:var(--azul);color:#fff}
+.btn.oro{background:var(--oro);color:#2a1c00}.btn.gris{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.fila{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:22px;flex-wrap:wrap}
+.pag{border:1px solid var(--line);border-radius:14px;padding:20px 22px;background:var(--bg);min-height:260px;max-height:56vh;overflow:auto}
+.pag h4{margin:14px 0 4px;font-size:15px}.pag p{margin:0 0 10px;font-size:15px}.pag li{font-size:15px}
+.cont{color:var(--mut);font-size:14px}
+.acepto{display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:15px}
+.acepto input{width:22px;height:22px;margin-top:2px;flex:none}
+.err{color:var(--mal);font-weight:600;margin-top:12px}
+.resumen{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:18px}
+a{color:var(--azul)}
+.gran{text-align:center;padding:40px 16px}.gran .ic{font-size:48px}
+@media(max-width:760px){.planes{grid-template-columns:1fr}.campos{grid-template-columns:1fr}}
+</style></head><body>
+<header><div><b>DC Gestión Jurídica</b><span>Pago seguro en línea</span></div></header>
+<main>
+<h1>Renovar su plan</h1>
+<p class="sub">Revise los datos y pague. Al confirmarse el pago, su plan se renueva solo y todo sigue funcionando.</p>
+<section id="vista"><div class="tarjeta">Cargando…</div></section>
+</main>
+<script>
+(function(){
+var API='https://okvxxppudwbcldxpxyfw.supabase.co/functions/v1/compra-publica';
+var APP='https://dcgestionjuridica.github.io/dc-gestion-juridica-app/';
+var $=function(i){return document.getElementById(i)};
+var esc=function(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var cop=function(n){return '$'+Math.round(Number(n)||0).toLocaleString('es-CO')};
+function llamar(cuerpo){return fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(cuerpo)}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok||j.error)throw new Error(j.error||'No se pudo completar. Intente de nuevo.');return j})})}
+function pinta(t,m,ic){$('vista').innerHTML='<div class="tarjeta gran"><div class="ic">'+ic+'</div><h2>'+t+'</h2><p class="cont">'+m+'</p></div>'}
+var listo='<p style="margin-top:18px"><a class="btn" href="'+APP+'" style="text-decoration:none;display:inline-block">Volver a la aplicación</a></p>';
+function cargarBold(){return new Promise(function(ok,mal){if(window.BoldCheckout)return ok();var s=document.createElement('script');s.src='https://checkout.bold.co/library/boldPaymentButton.js';s.onload=function(){window.BoldCheckout?ok():mal(new Error('No se pudo abrir la pasarela de pago.'))};s.onerror=function(){mal(new Error('No se pudo abrir la pasarela de pago. Revise su conexión.'))};document.head.appendChild(s)})}
+function vEstado(ref){var n=0;
+ pinta('Confirmando su pago…','Un momento, estamos esperando la confirmación del banco.','⏳');
+ (function ciclo(){llamar({operacion:'estado',referencia:ref}).then(function(r){
+  if(r.estado==='pagada')return pinta('¡Pago confirmado!','Su plan quedó renovado. Le enviamos el comprobante a su correo. Si la aplicación está abierta, ciérrela y vuelva a entrar.'+listo,'✅');
+  if(r.estado==='error')return pinta('No pudimos renovar su plan','Escríbanos por WhatsApp al 312 783 7570 con la referencia '+esc(ref)+' y lo resolvemos de inmediato.','⚠️');
+  if(++n>40)return pinta('Su pago sigue en revisión','Cuando el banco lo confirme, su plan se renueva solo y le llega el comprobante. Si tiene dudas, WhatsApp 312 783 7570 (referencia '+esc(ref)+').','🕒');
+  setTimeout(ciclo,4000)}).catch(function(){setTimeout(ciclo,6000)})})()
+}
+var q=new URLSearchParams(location.search),ref=q.get('ref')||'';
+if(!ref){pinta('Falta el enlace de renovación','Entre a la aplicación y oprima «Renovar ahora» en el aviso del plan.'+listo,'🔗')}
+else if(q.get('volver')){vEstado(ref)}
+else llamar({operacion:'renovacion',referencia:ref}).then(function(r){
+ if(r.estado==='pagada')return pinta('Esta renovación ya está pagada','El plan '+esc(r.plan)+' ('+esc(r.modalidad)+') de '+esc(r.despacho)+' ya quedó activo.'+listo,'✅');
+ $('vista').innerHTML='<div class="tarjeta"><h2>Resumen</h2><div class="resumen"><div><b>'+esc(r.despacho)+'</b><br><span class="cont">Plan '+esc(r.plan)+' · '+esc(r.modalidad)+'</span></div><div style="text-align:right"><b style="font-size:24px">'+cop(r.monto)+'</b><br><span class="cont">'+(r.modalidad==='Anual'?'por un año':'por un mes')+'</span></div></div><p class="cont">Los días que le queden del plan actual no se pierden: la renovación se suma a partir de la fecha en que vence.</p><div id="err" class="err"></div><div class="fila"><a class="btn gris" href="'+APP+'" style="text-decoration:none">Cancelar</a><button class="btn oro" id="pagar">Ir a pagar</button></div></div>';
+ $('pagar').onclick=function(){var b=this;b.disabled=true;$('err').textContent='';
+  cargarBold().then(function(){new window.BoldCheckout({orderId:r.referencia,currency:r.moneda,amount:String(r.monto),apiKey:r.llave_identidad,integritySignature:r.firma_integridad,description:'DC Gestión Jurídica · renovación plan '+r.plan+' ('+r.modalidad+')',redirectionUrl:location.origin+location.pathname+'?ref='+encodeURIComponent(r.referencia)+'&volver=1'}).open();b.disabled=false})
+  .catch(function(e){b.disabled=false;$('err').textContent=e.message})};
+}).catch(function(e){pinta('No se pudo abrir la renovación',esc(e.message),'⚠️')});
+})();
+</script></body></html>
