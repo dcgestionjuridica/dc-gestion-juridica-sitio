@@ -2,7 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-DOkfnWj7kupdJWmk9SnxCTySusbP1vpwKqQIzEq6peM=' https://*.bold.co; style-src 'self' 'unsafe-inline' https://*.bold.co; img-src 'self' data: https:; font-src 'self' data: https://*.bold.co; connect-src 'self' https://okvxxppudwbcldxpxyfw.supabase.co https://*.bold.co; frame-src https://*.bold.co; form-action 'self' https://*.bold.co; base-uri 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-23ZfZNF2ABjQQeRIV26TONcv1UFZyaeW/FrZ7RD97Jo=' https://*.bold.co; style-src 'self' 'unsafe-inline' https://*.bold.co; img-src 'self' data: https:; font-src 'self' data: https://*.bold.co; connect-src 'self' https://okvxxppudwbcldxpxyfw.supabase.co https://*.bold.co; frame-src https://*.bold.co; form-action 'self' https://*.bold.co; base-uri 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Comprar DC Gestión Jurídica</title>
 <link rel="icon" href="assets/favicon.png">
@@ -123,9 +123,10 @@ function vContrato(){
 }
 function vDoc(k){var d=S.docs.filter(function(x){return x.documento===k})[0];if(!d)return;
  $('vista').innerHTML='<div class="tarjeta"><h2>'+esc(d.titulo)+'</h2><div class="pag">'+(d.bloques||[]).map(bloqueHtml).join('')+'</div><div class="fila"><button class="btn" id="vol">Volver al contrato</button></div></div>';$('vol').onclick=vContrato}
+function equipo(){var u=navigator.userAgent||'',n=/Edg\//.test(u)?'Edge':/OPR\//.test(u)?'Opera':/Chrome\//.test(u)?'Chrome':/Firefox\//.test(u)?'Firefox':/Safari\//.test(u)?'Safari':'Navegador',v=(u.match(/(?:Edg|OPR|Chrome|Firefox|Version)\/(\d+)/)||[])[1],o=/Windows/.test(u)?'Windows':/Android/.test(u)?'Android':/iPhone|iPad/.test(u)?'iPhone o iPad':/Mac OS/.test(u)?'Mac':/Linux/.test(u)?'Linux':'otro sistema';return n+(v?' '+v:'')+' en '+o}
 function pagar(){
  S.ocupado=true;S.err='';vContrato();
- llamar(Object.assign({operacion:'iniciar',plan_id:S.plan.id,modalidad:S.modal,acepto:true},S.datos)).then(function(r){
+ llamar(Object.assign({operacion:'iniciar',plan_id:S.plan.id,modalidad:S.modal,acepto:true,equipo:equipo()},S.datos)).then(function(r){
   S.ref=r.referencia;return cargarBold().then(function(){
    var cfg={orderId:r.referencia,currency:r.moneda,amount:String(r.monto),apiKey:r.llave_identidad,integritySignature:r.firma_integridad,description:'DC Gestión Jurídica · plan '+S.plan.nombre+' ('+S.modal+')',redirectionUrl:location.origin+location.pathname+'?ref='+encodeURIComponent(r.referencia),customerData:JSON.stringify({email:S.datos.correo,fullName:S.datos.titular_nombre})};
    new window.BoldCheckout(cfg).open();S.ocupado=false;S.paso=4;vContrato()})
